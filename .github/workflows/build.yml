@@ -20,7 +20,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
+      # Android SDK уже установлен на ubuntu-latest, отдельный setup-android не нужен
 
       # Gradle wrapper в проекте нет, поэтому ставим Gradle напрямую
       - uses: gradle/actions/setup-gradle@v4
