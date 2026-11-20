@@ -25,7 +25,7 @@ class OverlayService : Service() {
     private var root: FrameLayout? = null
     private lateinit var iv: ImageView
     private lateinit var bar: LinearLayout
-    private lateinit var colors: M3Colors
+    private lateinit var m3c: M3Colors
     private var barAnims = mutableListOf<ValueAnimator>()
 
     private var locked = true
@@ -81,12 +81,12 @@ class OverlayService : Service() {
         }
 
         // Плавающая панель M3 (floating toolbar): контейнер surface container, форма full, elevation level 3 (6dp).
-        colors = M3Colors(this)
+        m3c = M3Colors(this)
         bar = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             background = GradientDrawable().apply {
-                setColor(colors.surfaceContainer)
+                setColor(m3c.surfaceContainer)
                 cornerRadius = 100 * dp
             }
             elevation = 6 * dp
@@ -94,19 +94,19 @@ class OverlayService : Service() {
             visibility = View.GONE
             // тональная кнопка (менее важная) — слева, заливная (главная) — справа
             addView(
-                M3Button(context, colors, M3Kind.TONAL, M3Size.S, round = true,
+                M3Button(context, m3c, M3Kind.TONAL, M3Size.S, round = true,
                     label = "Фото", iconRes = R.drawable.ic_image)
                     .apply { setOnClickListener { changePhoto() } }
             )
             addView(
-                M3IconButton(context, colors, R.drawable.ic_close, "Закрыть")
+                M3IconButton(context, m3c, R.drawable.ic_close, "Закрыть")
                     .apply { setOnClickListener { stopSelf() } },
                 LinearLayout.LayoutParams((40 * dp).toInt(), (40 * dp).toInt()).apply {
                     marginStart = (4 * dp).toInt(); marginEnd = (4 * dp).toInt()
                 }
             )
             addView(
-                M3Button(context, colors, M3Kind.FILLED, M3Size.S, round = true, label = "Заблокировать")
+                M3Button(context, m3c, M3Kind.FILLED, M3Size.S, round = true, label = "Заблокировать")
                     .apply { setOnClickListener { setLocked(true) } }
             )
         }
