@@ -154,3 +154,5 @@ Keep release keystores, passwords, aliases, and signing secrets outside the repo
 ## License
 
 No license is currently specified.
+.
+
