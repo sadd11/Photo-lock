@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- карточка с фото -->
+    <path android:fillColor="#EADDFF"
+        android:pathData="M38,30h32a10,10 0 0 1 10,10v28a10,10 0 0 1 -10,10h-32a10,10 0 0 1 -10,-10v-28a10,10 0 0 1 10,-10z" />
+    <!-- солнце -->
+    <path android:fillColor="#6750A4"
+        android:pathData="M42,38m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+    <!-- горы -->
+    <path android:fillColor="#B69DF8"
+        android:pathData="M32,74L45,54L55,66L62,58L76,74z" />
+    <!-- значок замка -->
+    <path android:fillColor="#6750A4"
+        android:pathData="M57,72a15,15 0 1,0 30,0a15,15 0 1,0 -30,0z" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.5"
+        android:pathData="M67,70v-4a5,5 0 0 1 10,0v4" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M64,69h16a1.5,1.5 0 0 1 1.5,1.5v9a1.5,1.5 0 0 1 -1.5,1.5h-16a1.5,1.5 0 0 1 -1.5,-1.5v-9a1.5,1.5 0 0 1 1.5,-1.5z" />
+</vector>
