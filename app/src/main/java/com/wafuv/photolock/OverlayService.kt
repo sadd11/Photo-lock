@@ -182,6 +182,8 @@ class OverlayService : Service() {
     // ---------- касания ----------
 
     private var lastAngle = 0f
+    private var lastMidX = 0f
+    private var lastMidY = 0f
 
     private fun angle(e: MotionEvent) =
         Math.toDegrees(atan2((e.getY(1) - e.getY(0)).toDouble(), (e.getX(1) - e.getX(0)).toDouble())).toFloat()
@@ -196,7 +198,11 @@ class OverlayService : Service() {
             MotionEvent.ACTION_DOWN -> { lastX = e.x; lastY = e.y; scaling = false }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 scaling = true
-                if (e.pointerCount == 2) lastAngle = angle(e)
+                if (e.pointerCount == 2) {
+                    lastAngle = angle(e)
+                    lastMidX = (e.getX(0) + e.getX(1)) / 2f
+                    lastMidY = (e.getY(0) + e.getY(1)) / 2f
+                }
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 // оставшийся палец продолжает двигать без прыжка
@@ -208,6 +214,11 @@ class OverlayService : Service() {
                     m.postTranslate(e.x - lastX, e.y - lastY)
                     clampAndApply()
                 } else if (e.pointerCount == 2) {
+                    // перемещение двумя пальцами: фото едет за серединой между пальцами
+                    val mx = (e.getX(0) + e.getX(1)) / 2f
+                    val my = (e.getY(0) + e.getY(1)) / 2f
+                    m.postTranslate(mx - lastMidX, my - lastMidY)
+                    lastMidX = mx; lastMidY = my
                     // вращение двумя пальцами вокруг точки между ними
                     val a = angle(e)
                     var d = a - lastAngle
