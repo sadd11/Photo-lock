@@ -114,7 +114,7 @@ class OverlayService : Service() {
         scaleDetector = ScaleGestureDetector(this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(d: ScaleGestureDetector): Boolean {
                 val cur = currentScale()
-                val target = (cur * d.scaleFactor).coerceIn(base, base * 6f)
+                val target = (cur * d.scaleFactor).coerceIn(base * 0.1f, base * 6f)
                 val f = target / cur
                 m.postScale(f, f, d.focusX, d.focusY)
                 clampAndApply()
@@ -266,8 +266,8 @@ class OverlayService : Service() {
 
     private fun clampAndApply() {
         val vw = iv.width.toFloat(); val vh = iv.height.toFloat()
-        if (abs(currentRotation()) < 0.5f) {
-            // без поворота: фото всегда закрывает экран
+        if (abs(currentRotation()) < 0.5f && currentScale() >= base * 0.999f) {
+            // без поворота и без отзума: фото всегда закрывает экран
             val r = RectF(0f, 0f, bw, bh)
             m.mapRect(r)
             var dx = 0f; var dy = 0f
@@ -277,7 +277,7 @@ class OverlayService : Service() {
             else { if (r.top > 0) dy = -r.top; if (r.bottom < vh) dy = vh - r.bottom }
             m.postTranslate(dx, dy)
         } else {
-            // с поворотом: центр фото не уходит за пределы экрана
+            // с поворотом или при отзуме: центр фото не уходит за пределы экрана
             val c = floatArrayOf(bw / 2f, bh / 2f)
             m.mapPoints(c)
             m.postTranslate(c[0].coerceIn(0f, vw) - c[0], c[1].coerceIn(0f, vh) - c[1])
